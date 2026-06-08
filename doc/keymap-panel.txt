@@ -1,0 +1,50 @@
+*keymap-panel.txt*	Persistent keymap sidebar for Neovim
+
+==============================================================================
+INTRODUCTION                                              *keymap-panel-intro*
+
+keymap-panel.nvim shows a persistent right-hand sidebar listing your keymaps.
+It combines a static cheatsheet parsed from a Markdown file with dynamically
+detected keymaps from your own config.
+
+==============================================================================
+SETUP                                                    *keymap-panel-setup*
+
+>lua
+    require("keymap-panel").setup({
+      width = 34,
+      key_width = 12,
+      auto_open = true,
+      cheatsheet = vim.fn.stdpath("config") .. "/cheatsheet.md",
+      scan = { "init.lua", "lua/config", "lua/plugins", "lua/polish.lua" },
+      modes = { "n", "v", "i", "t" },
+      custom_section = "自作キーマップ (動的)",
+    })
+<
+
+==============================================================================
+COMMANDS                                              *keymap-panel-commands*
+
+                                                              *:KeymapPanel*
+:KeymapPanel [action]	Run an action. With no argument, toggles the panel.
+			Actions: open, close, toggle, refresh, focus_next,
+			focus_prev, close_all.
+
+Inside the panel:
+	q	close the panel
+	R	reload the panel
+
+==============================================================================
+FUNCTIONS                                            *keymap-panel-functions*
+
+require("keymap-panel").open()
+require("keymap-panel").close()
+require("keymap-panel").close_all()	Close panels in every tab. Call this
+					from a session manager's pre-save hook.
+require("keymap-panel").toggle()
+require("keymap-panel").refresh()
+require("keymap-panel").open_when_tree_ready()	Open after an async file
+					explorer (e.g. neo-tree) finishes
+					building, avoiding a race.
+
+ vim:tw=78:ts=8:ft=help:norl:
